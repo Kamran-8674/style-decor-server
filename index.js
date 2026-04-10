@@ -32,6 +32,7 @@ async function run() {
 
     const db = client.db('style_decor_db')
     const servicesCollection = db.collection('services')
+    const bookingsCollection = db.collection('bookings')
 
     // Service Api
     app.get('/services',async(req,res)=>{
@@ -42,7 +43,7 @@ async function run() {
 
     })
 
-    app.get('services/:id', async (req,res)=>{
+    app.get('/services/:id', async (req,res)=>{
       const id = req.params.id
       const query = {_id: new ObjectId(id)}
       const result = await servicesCollection.findOne(query)
@@ -55,6 +56,14 @@ async function run() {
       res.send(result)
 
 
+    })
+
+    // Bookings API
+
+    app.post('/bookings', async(req,res)=>{
+      const bookings = req.body
+      const result = await bookingsCollection.insertOne(bookings)
+      res.send(result)
     })
 
 
