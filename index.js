@@ -60,9 +60,32 @@ async function run() {
 
     // Bookings API
 
+    app.get('/bookings', async (req,res)=>{
+      const query = {}
+      const {email} = req.query
+      if(email){
+        query.userEmail = email
+      }
+
+      const options = { sort:{createdAt: -1}}
+
+      const cursor = bookingsCollection.find(query,options)
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
     app.post('/bookings', async(req,res)=>{
       const bookings = req.body
+      bookings.createdAt= new Date()
+
       const result = await bookingsCollection.insertOne(bookings)
+      res.send(result)
+    })
+
+    app.delete('/bookings/:id', async (req,res)=>{
+      const id = req.params.id
+      const query = { _id : new ObjectId(id)}
+      const result = await bookingsCollection.deleteOne(query)
       res.send(result)
     })
 
