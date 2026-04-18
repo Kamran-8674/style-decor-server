@@ -252,7 +252,15 @@ async function run() {
     })
 
     // decorator api
-
+  app.get('/decorators', async (req,res)=>{
+      const query = {}
+      if(req.query.status){
+        query.status = req.query.status
+      }
+      const cursor  = decoratorCollection.find(query)
+      const result = await cursor.toArray()
+      res.send(result)
+    })
     
 
     app.post('/decorators', async (req,res)=>{
