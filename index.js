@@ -270,6 +270,20 @@ async function run() {
       res.send(result)
     })
 
+    app.patch('/decorators', async (req,res)=>{
+      const status = req.body.status
+      const id = req.params.id
+      const query ={_id : new ObjectId(id)}
+      const updatedDoc = {
+        $set:{
+          status : status
+        }
+      }
+      const result = await decoratorCollection.updateOne(query,updatedDoc)
+      res.send(result)
+
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
