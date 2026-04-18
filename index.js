@@ -8,13 +8,12 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const port = process.env.PORT || 3000;
 const crypto = require("crypto");
 
-const  admin = require("firebase-admin");
+// const  admin = require("firebase-admin");
 
-const  serviceAccount = require("./style-decor-9072c-firebase-adminsdk-fbsvc-1939e85d94.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
 
 
 
@@ -31,31 +30,31 @@ function generateTrackingId() {
 app.use(express.json());
 app.use(cors());
 
-const verifyFBToken = async (req,res,next) =>{
-  // console.log('in', req.headers.authorization)
-  const token = req.headers.authorization
-  // console.log(token)
+// const verifyFBToken = async (req,res,next) =>{
+//   // console.log('in', req.headers.authorization)
+//   const token = req.headers.authorization
+//   // console.log(token)
 
-  if(!token){
-   return  res.status(401).send({message:'unauthorized access'})
-  }
+//   if(!token){
+//    return  res.status(401).send({message:'unauthorized access'})
+//   }
 
-  try{
-    const idToken = token.split(" ")[1]
-    const decoded = await admin.auth().verifyIdToken(idToken)
-    console.log('jjj',decoded)
+//   try{
+//     const idToken = token.split(" ")[1]
+//     const decoded = await admin.auth().verifyIdToken(idToken)
+//     console.log('jjj',decoded)
 
-      next()
-
-
-
-  }
-  catch(err){
-
-  }
+//       next()
 
 
-}
+
+//   }
+//   catch(err){
+
+//   }
+
+
+// }
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ahmyuia.mongodb.net/?appName=Cluster0`;
 
